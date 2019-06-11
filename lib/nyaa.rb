@@ -2,25 +2,6 @@ require "open-uri"
 require "uri"
 require "nokogiri"
 
-module Nyaa; end
-
-module Nyaa::Filter
-  NoFilter = "0"
-  NoRemakes = "1"
-  TrustedOnly = "2"
-end
-
-module Nyaa::Category
-  AllCategories="0_0"
-
-  module Anime
-    MusicVideo = "1_1"
-    EnglishTranslated = "1_2"
-    NonEnglishTranslated = "1_3"
-    Raw = "1_4"
-  end
-end
-
 class NyaaTorrents
 
   def initialize(args={})
@@ -66,5 +47,24 @@ class NyaaTorrents
 
   def links
     Nokogiri::HTML(html).css(".torrent-list tr a")
+  end
+end
+
+module Nyaa
+  module Filter
+    NoFilter = "0"
+    NoRemakes = "1"
+    TrustedOnly = "2"
+  end
+
+  module Category
+    AllCategories = "0_0"
+
+    module Anime
+      MusicVideo = "1_1"
+      EnglishTranslated = "1_2"
+      NonEnglishTranslated = "1_3"
+      Raw = "1_4"
+    end
   end
 end
