@@ -14,8 +14,6 @@ class TestNyaaScraper < MiniTest::Test
     @nyaa = NyaaTorrents.new
   end
 
-  attr_reader :nyaa
-
   def test_that_the_nyaa_webpage_can_be_fetched
     stub_request(:get, @nyaa.uri).to_return(:body => @index)
 
