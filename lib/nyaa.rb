@@ -23,8 +23,6 @@ module Nyaa::Category
 end
 
 class NyaaTorrents
-  attr_reader :transmission
-
   def initialize(args={})
     params = defaults.merge(args)
 
