@@ -33,12 +33,10 @@ class NyaaTorrents
     @query = params[:query]
     @page = params[:page]
 
-    @transmission = Transmission.new(
-      :host => params[:host],
-      :port => params[:port],
-      :user => params[:user],
-      :pass => params[:pass]
-    )
+    @host = params[:host]
+    @port = params[:port]
+    @user = params[:user]
+    @pass = params[:pass]
 
     @base = "https://nyaa.si"
   end
@@ -86,5 +84,14 @@ class NyaaTorrents
     magnets.each do |m|
       transmission.add_magnet m, :paused => true
     end
+  end
+
+  def transmission
+    @transmission ||= Transmission.new(
+      :host => @host,
+      :port => @port,
+      :user => @user,
+      :pass => @pass
+    )
   end
 end
