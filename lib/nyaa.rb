@@ -20,10 +20,10 @@ class NyaaTorrents
     @pass = params[:pass]
 
     @transmission = Transmission.new(
-      :host => "localhost",
-      :port => 9091,
-      :user => "transmission",
-      :pass => "transmission"
+      :host => @host,
+      :port => @port,
+      :user => @user,
+      :pass => @pass
     )
 
     @base = "https://nyaa.si"
@@ -58,12 +58,6 @@ class NyaaTorrents
     )
   end
 
-  def torrents
-    links
-      .map { |link| link["href"] } \
-      .select { |href| href =~ /\.torrent$/ }
-  end
-
   def magnets
     links
       .map { |link| link["href"] } \
@@ -74,7 +68,7 @@ class NyaaTorrents
     Nokogiri::HTML(html).css(".torrent-list tr a")
   end
 
-  def add_magnets(magnets)
+  def add_magnets
     magnets.each do |m|
       transmission.add_magnet m, :paused => true
     end

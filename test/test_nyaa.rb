@@ -8,7 +8,7 @@ require "transmission"
 
 WebMock.allow_net_connect!
 
-class TestNyaaTorrents < MiniTest::Test
+class TestNyaaScraper < MiniTest::Test
   def setup
     @index = File.read("fixtures/index.html")
     @nyaa = NyaaTorrents.new
@@ -20,12 +20,6 @@ class TestNyaaTorrents < MiniTest::Test
     stub_request(:get, @nyaa.uri).to_return(:body => @index)
 
     assert_match(/<!DOCTYPE html>/, @nyaa.html)
-  end
-
-  def test_that_the_torrent_links_can_be_extracted
-    @nyaa.stub :html, @index do
-      refute_empty @nyaa.torrents
-    end
   end
 
   def test_that_the_magnet_links_can_be_extracted
@@ -65,7 +59,6 @@ end
 class TestTransmissionClient < Minitest::Test
   def setup
     @magnet_links = JSON.parse File.read("fixtures/magnets.json")
-
     @nyaa = NyaaTorrents.new
   end
 
@@ -76,7 +69,9 @@ class TestTransmissionClient < Minitest::Test
   end
 
   def test_that_the_transmission_daemon_accepts_a_list_of_magnet_links
-    @nyaa.add_magnets(@magnet_links)
+    @nyaa.stub :magnets, @magnet_links do
+      @nyaa.add_magnets
+    end
 
     assert_equal @magnet_links.length, @nyaa.transmission.list.length
   end
