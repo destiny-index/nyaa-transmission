@@ -1,21 +1,41 @@
+require "json"
 require "minitest/autorun"
 require "minitest/mock"
 require "webmock/minitest"
 
 require "nyaa"
+require "transmission"
+
+WebMock.allow_net_connect!
 
 class TestNyaaTorrents < MiniTest::Test
   def setup
     @index = File.read("fixtures/index.html")
+    @nyaa = NyaaTorrents.new
   end
+
+  attr_reader :nyaa
 
   def test_that_the_nyaa_webpage_can_be_fetched
-    nyaa = NyaaTorrents.new
-    stub_request(:get, nyaa.uri).to_return(:body => @index)
+    stub_request(:get, @nyaa.uri).to_return(:body => @index)
 
-    assert_match(/<!DOCTYPE html>/, nyaa.html)
+    assert_match(/<!DOCTYPE html>/, @nyaa.html)
   end
 
+  def test_that_the_torrent_links_can_be_extracted
+    @nyaa.stub :html, @index do
+      refute_empty @nyaa.torrents
+    end
+  end
+
+  def test_that_the_magnet_links_can_be_extracted
+    @nyaa.stub :html, @index do
+      refute_empty @nyaa.magnets
+    end
+  end
+end
+
+class TestNyaaSearch < MiniTest::Test
   def test_that_the_query_string_contains_the_filter
     nyaa = NyaaTorrents.new :filter => Nyaa::Filter::TrustedOnly
 
@@ -40,12 +60,24 @@ class TestNyaaTorrents < MiniTest::Test
 
     assert_match "p=2", nyaa.querystring
   end
+end
 
-  def test_that_the_torrent_links_can_be_extracted
-    nyaa = NyaaTorrents.new
+class TestTransmissionClient < Minitest::Test
+  def setup
+    @magnet_links = JSON.parse File.read("fixtures/magnets.json")
 
-    nyaa.stub :html, @index do
-      refute_empty nyaa.torrents
+    @nyaa = NyaaTorrents.new
+  end
+
+  def teardown
+    @nyaa.transmission.list.each do |t|
+      @nyaa.transmission.delete(t["id"], true)
     end
+  end
+
+  def test_that_the_transmission_daemon_accepts_a_list_of_magnet_links
+    @nyaa.add_magnets(@magnet_links)
+
+    assert_equal @magnet_links.length, @nyaa.transmission.list.length
   end
 end
