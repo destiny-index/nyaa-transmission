@@ -14,6 +14,7 @@ Refactoring
     3. Technical Empathy
     4. Necessary for any Agile methodology
     5. Necessary for TDD
+    6. Necessary for Domain Driven Design
     6. Necessary for Working effectively with legacy code
 
 3. When should we refactor?
@@ -26,6 +27,9 @@ Refactoring
     1. Extract Class
 
         1. Move field
+
+            1. Self-encapsulate field
+
         2. Move method
 
 5. Tests - How many times, how often?
