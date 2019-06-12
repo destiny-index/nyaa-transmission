@@ -3,6 +3,25 @@ require "uri"
 require "nokogiri"
 require "transmission"
 
+module Nyaa; end
+
+module Nyaa::Filter
+  NoFilter = "0"
+  NoRemakes = "1"
+  TrustedOnly = "2"
+end
+
+module Nyaa::Category
+  AllCategories = "0_0"
+
+  module Anime
+    MusicVideo = "1_1"
+    EnglishTranslated = "1_2"
+    NonEnglishTranslated = "1_3"
+    Raw = "1_4"
+  end
+end
+
 class NyaaTorrents
   attr_reader :transmission
 
@@ -14,16 +33,11 @@ class NyaaTorrents
     @query = params[:query]
     @page = params[:page]
 
-    @host = params[:host]
-    @port = params[:port]
-    @user = params[:user]
-    @pass = params[:pass]
-
     @transmission = Transmission.new(
-      :host => @host,
-      :port => @port,
-      :user => @user,
-      :pass => @pass
+      :host => params[:host],
+      :port => params[:port],
+      :user => params[:user],
+      :pass => params[:pass]
     )
 
     @base = "https://nyaa.si"
@@ -71,25 +85,6 @@ class NyaaTorrents
   def add_magnets
     magnets.each do |m|
       transmission.add_magnet m, :paused => true
-    end
-  end
-end
-
-module Nyaa
-  module Filter
-    NoFilter = "0"
-    NoRemakes = "1"
-    TrustedOnly = "2"
-  end
-
-  module Category
-    AllCategories = "0_0"
-
-    module Anime
-      MusicVideo = "1_1"
-      EnglishTranslated = "1_2"
-      NonEnglishTranslated = "1_3"
-      Raw = "1_4"
     end
   end
 end
