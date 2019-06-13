@@ -4,7 +4,6 @@ require "minitest/mock"
 require "webmock/minitest"
 
 require "nyaa"
-require "transmission"
 
 WebMock.allow_net_connect!
 
