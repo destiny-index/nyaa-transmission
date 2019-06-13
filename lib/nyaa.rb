@@ -24,31 +24,17 @@ end
 
 class NyaaTorrents
   def initialize(args={})
-    params = defaults.merge(args)
+    @filter = args[:filter] ||  Nyaa::Filter::NoFilter
+    @category = args[:category] || Nyaa::Category::AllCategories
+    @query = args[:query] || ""
+    @page = args[:page] || 1
 
-    @filter = params[:filter]
-    @category = params[:category]
-    @query = params[:query]
-    @page = params[:page]
-
-    @host = params[:host]
-    @port = params[:port]
-    @user = params[:user]
-    @pass = params[:pass]
+    @host = args[:host] || "localhost"
+    @port = args[:port] || 9091
+    @user = args[:user] || "transmission"
+    @pass = args[:pass] || "transmission"
 
     @base = "https://nyaa.si"
-  end
-
-  def defaults
-    { :filter => Nyaa::Filter::NoFilter,
-      :category => Nyaa::Category::AllCategories,
-      :query => "",
-      :page => 1,
-
-      :host => "localhost",
-      :port => 9091,
-      :user => "transmission",
-      :pass => "transmission" }
   end
 
   def html
