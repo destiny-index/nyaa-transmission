@@ -2,32 +2,15 @@ require "open-uri"
 require "uri"
 require "nokogiri"
 require "transmission"
-
-module Nyaa; end
-
-module Nyaa::Filter
-  NoFilter = "0"
-  NoRemakes = "1"
-  TrustedOnly = "2"
-end
-
-module Nyaa::Category
-  AllCategories = "0_0"
-
-  module Anime
-    MusicVideo = "1_1"
-    EnglishTranslated = "1_2"
-    NonEnglishTranslated = "1_3"
-    Raw = "1_4"
-  end
-end
+require "nyaa_search"
+require "forwardable"
 
 class NyaaTorrents
+  extend Forwardable
+  def_delegators :@search, :querystring
+
   def initialize(args={})
-    @filter = args[:filter] ||  Nyaa::Filter::NoFilter
-    @category = args[:category] || Nyaa::Category::AllCategories
-    @query = args[:query] || ""
-    @page = args[:page] || 1
+    @search = NyaaSearch.new(args)
 
     @host = args[:host] || "localhost"
     @port = args[:port] || 9091
@@ -43,15 +26,6 @@ class NyaaTorrents
 
   def uri
     URI.join @base, "?#{querystring}"
-  end
-
-  def querystring
-    URI.encode_www_form(
-      "f" => @filter,
-      "c" => @category,
-      "q" => @query,
-      "p" => @page
-    )
   end
 
   def magnets
