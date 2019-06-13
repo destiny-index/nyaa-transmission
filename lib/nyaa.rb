@@ -1,40 +1,11 @@
-require "transmission"
 require "nyaa_search"
 require "nyaa_scraper"
-require "forwardable"
+require "bittorrent_client"
 
 class NyaaTorrents
-  extend Forwardable
-  def_delegators :@scraper, :magnets, :torrents
-
   def initialize(args={})
     search = NyaaSearch.new(args)
-    @scraper = NyaaScraper.new(search)
-
-    @host = args[:host] || "localhost"
-    @port = args[:port] || 9091
-    @user = args[:user] || "transmission"
-    @pass = args[:pass] || "transmission"
-  end
-
-  def add_magnets
-    magnets.each do |m|
-      transmission.add_magnet m, :paused => true
-    end
-  end
-
-  def add_torrents
-    torrents.each do |t|
-      transmission.add_torrentfile t, :paused => true
-    end
-  end
-
-  def transmission
-    @transmission ||= Transmission.new(
-      :host => @host,
-      :port => @port,
-      :user => @user,
-      :pass => @pass
-    )
+    scraper = NyaaScraper.new(search)
+    @bittorrent = BitTorrentClient.new(scraper, args)
   end
 end
