@@ -25,6 +25,12 @@ class TestNyaaScraper < MiniTest::Test
       refute_empty @nyaa.magnets
     end
   end
+
+  def test_that_the_torrent_links_can_be_extracted
+    @nyaa.stub :html, @index do
+      refute_empty @nyaa.torrents
+    end
+  end
 end
 
 class TestNyaaSearch < MiniTest::Test
@@ -57,6 +63,7 @@ end
 class TestTransmissionClient < Minitest::Test
   def setup
     @magnet_links = JSON.parse File.read("fixtures/magnets.json")
+    @torrent_links = JSON.parse File.read("fixtures/torrents.json")
     @nyaa = NyaaTorrents.new
   end
 
@@ -66,11 +73,19 @@ class TestTransmissionClient < Minitest::Test
     end
   end
 
-  def test_that_the_transmission_daemon_accepts_a_list_of_magnet_links
+  def test_that_transmission_accepts_a_list_of_magnet_links
     @nyaa.stub :magnets, @magnet_links do
       @nyaa.add_magnets
     end
 
     assert_equal @magnet_links.length, @nyaa.transmission.list.length
+  end
+
+  def _test_that_transmission_accepts_a_list_of_torrent_links
+    @nyaa.stub :torrents, @torrent_links do
+      @nyaa.add_torrents
+    end
+
+    assert_equal @torrent_links.length, @nyaa.transmission.list.length
   end
 end

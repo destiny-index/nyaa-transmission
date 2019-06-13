@@ -55,18 +55,30 @@ class NyaaTorrents
   end
 
   def magnets
-    links
-      .map { |link| link["href"] } \
-      .select { |href| href =~ /^magnet/ }
+    links.select { |href| href =~ /^magnet/ }
+  end
+
+  def torrents
+    links.select { |href| href =~ /\.torrent$/ } \
+      .map { |href| URI.join @base, "#{href}" } \
+      .map { |uri| uri.to_s }
   end
 
   def links
-    Nokogiri::HTML(html).css(".torrent-list tr a")
+    Nokogiri::HTML(html)\
+      .css(".torrent-list tr a") \
+      .map { |link| link["href"] }
   end
 
   def add_magnets
     magnets.each do |m|
       transmission.add_magnet m, :paused => true
+    end
+  end
+
+  def add_torrents
+    torrents.each do |t|
+      transmission.add_torrentfile t, :paused => true
     end
   end
 
