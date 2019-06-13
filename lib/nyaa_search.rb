@@ -1,3 +1,5 @@
+require "uri"
+
 module Nyaa; end
 
 module Nyaa::Filter
