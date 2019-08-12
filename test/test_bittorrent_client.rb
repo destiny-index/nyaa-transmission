@@ -11,29 +11,29 @@ class TestBitTorrentClient < Minitest::Test
     @magnet_links = JSON.parse File.read("fixtures/magnets.json")
     @torrent_links = JSON.parse File.read("fixtures/torrents.json")
 
-    @scraper = NyaaScraper.new nil
-    @bittorrent = BitTorrentClient.new @scraper
+    @bittorrent = BitTorrentClient.new
   end
 
   def teardown
-    @bittorrent.transmission.list.each do |t|
-      @bittorrent.transmission.delete(t["id"], true)
-    end
+    @bittorrent.purge_all
   end
 
   def test_that_transmission_accepts_a_list_of_magnet_links
-    @scraper.stub :magnets, @magnet_links do
-      @bittorrent.add_magnets
-    end
+    @bittorrent.add_magnets @magnet_links
 
     assert_equal @magnet_links.length, @bittorrent.transmission.list.length
   end
 
   def test_that_transmission_accepts_a_list_of_torrent_links
-    @scraper.stub :torrents, @torrent_links do
-      @bittorrent.add_torrents
-    end
+    @bittorrent.add_torrents @torrent_links
 
     assert_equal @torrent_links.length, @bittorrent.transmission.list.length
+  end
+
+  def test_that_transmission_purges_all_torrents
+    @bittorrent.add_torrents @torrent_links
+
+    @bittorrent.purge_all
+    assert_equal 0, @bittorrent.transmission.list.length
   end
 end

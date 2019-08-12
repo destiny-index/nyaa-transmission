@@ -3,8 +3,7 @@ require "transmission"
 class BitTorrentClient
   attr_accessor :host, :port, :user, :pass
 
-  def initialize(scraper, args={})
-    @scraper = scraper
+  def initialize(args={})
     self.host = args[:host] || "localhost"
     self.port = args[:port] || 9091
     self.user = args[:user] || "transmission"
@@ -20,15 +19,21 @@ class BitTorrentClient
     )
   end
 
-  def add_magnets
-    @scraper.magnets.each do |m|
+  def add_magnets(magnets) 
+    magnets.each do |m|
       transmission.add_magnet m, :paused => true
     end
   end
 
-  def add_torrents
-    @scraper.torrents.each do |t|
+  def add_torrents(torrents)
+    torrents.each do |t|
       transmission.add_torrentfile t, :paused => true
+    end
+  end
+
+  def purge_all
+    transmission.list.each do |t|
+      transmission.delete(t["id"], true)
     end
   end
 end
