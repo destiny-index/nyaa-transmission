@@ -1,12 +1,12 @@
 require "nyaa_search"
 require "nyaa_scraper"
-require "bittorrent_client"
+require "transmission_client"
 
 class NyaaTorrents
   attr_accessor :bittorrent
 
   def initialize()
-    @bittorrent = BitTorrentClient.new
+    @bittorrent = TransmissionClient.new
   end
 
   def add_all_magnets(series="")

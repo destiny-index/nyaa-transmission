@@ -1,6 +1,6 @@
 require "transmission"
 
-class BitTorrentClient
+class TransmissionClient
   attr_accessor :host, :port, :user, :pass
 
   def initialize(args={})
@@ -19,7 +19,7 @@ class BitTorrentClient
     )
   end
 
-  def add_magnets(magnets) 
+  def add_magnets(magnets)
     magnets.each do |m|
       transmission.add_magnet m, :paused => true
     end
@@ -29,6 +29,14 @@ class BitTorrentClient
     torrents.each do |t|
       transmission.add_torrentfile t, :paused => true
     end
+  end
+
+  def list_all
+    transmission.list
+  end
+
+  def count
+    list_all.length
   end
 
   def purge_all

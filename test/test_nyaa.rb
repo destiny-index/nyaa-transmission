@@ -13,6 +13,6 @@ class TestNyaaTorrents < Minitest::Test
   def test_that_anime_magnets_are_added_to_bittorrent_client
     @nyaa_torrents.add_all_magnets "one punch man s2"
     num_episodes = 12
-    assert_equal num_episodes, @nyaa_torrents.bittorrent.transmission.list.length
+    assert_equal num_episodes, @nyaa_torrents.bittorrent.count
   end
 end
