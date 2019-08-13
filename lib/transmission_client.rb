@@ -1,13 +1,23 @@
 require "transmission"
+require "sqlite3"
 
 class TransmissionClient
-  attr_accessor :host, :port, :user, :pass
+  attr_accessor :host, :port, :user, :pass, :sqlite
 
   def initialize(args={})
-    self.host = args[:host] || "localhost"
-    self.port = args[:port] || 9091
-    self.user = args[:user] || "transmission"
-    self.pass = args[:pass] || "transmission"
+    @host = args[:host] || "localhost"
+    @port = args[:port] || 9091
+    @user = args[:user] || "transmission"
+    @pass = args[:pass] || "transmission"
+
+    @sqlite = SQLite3::Database.new ":memory:"
+    @sqlite.execute <<~SQL
+      CREATE TABLE magnet_links (
+        id INTEGER PRIMARY KEY,
+        link TEXT UNIQUE,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    SQL
   end
 
   def transmission
@@ -21,6 +31,7 @@ class TransmissionClient
 
   def add_magnets(magnets)
     magnets.each do |m|
+      record_magnet_link m
       transmission.add_magnet m, :paused => true
     end
   end
@@ -44,4 +55,15 @@ class TransmissionClient
       transmission.delete(t["id"], true)
     end
   end
+
+  def history
+    sqlite.get_first_value "SELECT COUNT(id) FROM magnet_links"
+  end
+
+  private
+
+    def record_magnet_link(magnet_link)
+      sqlite.execute "INSERT INTO magnet_links ( link ) VALUES ( ? )", magnet_link
+    end
+
 end

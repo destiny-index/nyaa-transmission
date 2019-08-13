@@ -5,8 +5,6 @@ require "transmission_client"
 require "test_scraper_interface"
 
 class TestTransmissionClient < Minitest::Test
-  include TestScraperInterface
-
   def setup
     @magnet_links = JSON.parse File.read("fixtures/magnets.json")
     @torrent_links = JSON.parse File.read("fixtures/torrents.json")
@@ -35,5 +33,28 @@ class TestTransmissionClient < Minitest::Test
 
     @bittorrent.purge_all
     assert_equal 0, @bittorrent.count
+  end
+end
+
+class TestTransmissionHistory < Minitest::Test
+  def setup
+    @bittorrent = TransmissionClient.new
+    @magnet_links = JSON.parse File.read("fixtures/magnets.json")
+  end
+
+  def teardown
+    @bittorrent.purge_all
+  end
+
+  def test_that_added_magnet_links_are_recorded_in_history
+    @bittorrent.add_magnets @magnet_links
+    assert_equal @magnet_links.length, @bittorrent.history
+  end
+
+  def test_that_magnet_links_cannot_be_added_multiple_times
+    assert_raises SQLite3::ConstraintException do
+      @bittorrent.add_magnets @magnet_links
+      @bittorrent.add_magnets @magnet_links
+    end
   end
 end
