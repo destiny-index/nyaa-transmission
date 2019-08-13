@@ -34,6 +34,7 @@ GEM
     public_suffix (3.1.0)
     rake (12.3.2)
     safe_yaml (1.0.5)
+    sqlite3 (1.4.1)
     transmission-ng (1.0.10)
       mechanize (~> 2.7)
     unf (0.1.4)
@@ -52,6 +53,7 @@ DEPENDENCIES
   minitest
   nokogiri
   rake
+  sqlite3
   transmission-ng
   webmock
 
