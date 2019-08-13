@@ -52,9 +52,9 @@ class TestTransmissionHistory < Minitest::Test
   end
 
   def test_that_magnet_links_cannot_be_added_multiple_times
-    assert_raises SQLite3::ConstraintException do
-      @bittorrent.add_magnets @magnet_links
-      @bittorrent.add_magnets @magnet_links
-    end
+    @bittorrent.add_magnets @magnet_links
+    @bittorrent.add_magnets @magnet_links
+
+    assert_equal @magnet_links.length, @bittorrent.history
   end
 end

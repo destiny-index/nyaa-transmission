@@ -33,6 +33,8 @@ class TransmissionClient
     magnets.each do |m|
       record_magnet_link m
       transmission.add_magnet m, :paused => true
+    rescue SQLite3::ConstraintException
+      next
     end
   end
 
