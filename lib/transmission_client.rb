@@ -2,17 +2,16 @@ require "transmission"
 require "sqlite3"
 
 class TransmissionClient
-  attr_accessor :host, :port, :user, :pass, :sqlite
-
   def initialize(args={})
     @host = args[:host] || "localhost"
     @port = args[:port] || 9091
     @user = args[:user] || "transmission"
     @pass = args[:pass] || "transmission"
+    @db = args[:db] || ":memory:"
 
-    @sqlite = SQLite3::Database.new ":memory:"
+    @sqlite = SQLite3::Database.new @db
     @sqlite.execute <<~SQL
-      CREATE TABLE magnet_links (
+      CREATE TABLE IF NOT EXISTS links (
         id INTEGER PRIMARY KEY,
         link TEXT UNIQUE,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
@@ -20,18 +19,9 @@ class TransmissionClient
     SQL
   end
 
-  def transmission
-    @transmission ||= Transmission.new(
-      :host => self.host,
-      :port => self.port,
-      :user => self.user,
-      :pass => self.pass
-    )
-  end
-
   def add_magnets(magnets)
     magnets.each do |m|
-      record_magnet_link m
+      record_link m
       transmission.add_magnet m, :paused => true
     rescue SQLite3::ConstraintException
       next
@@ -40,7 +30,10 @@ class TransmissionClient
 
   def add_torrents(torrents)
     torrents.each do |t|
+      record_link t
       transmission.add_torrentfile t, :paused => true
+    rescue SQLite3::ConstraintException
+      next
     end
   end
 
@@ -59,13 +52,26 @@ class TransmissionClient
   end
 
   def history
-    sqlite.get_first_value "SELECT COUNT(id) FROM magnet_links"
+    sqlite.get_first_value "SELECT COUNT(id) FROM links"
   end
 
   private
 
-    def record_magnet_link(magnet_link)
-      sqlite.execute "INSERT INTO magnet_links ( link ) VALUES ( ? )", magnet_link
+    def transmission
+      @transmission ||= Transmission.new(
+        :host => @host,
+        :port => @port,
+        :user => @user,
+        :pass => @pass
+      )
+    end
+
+    def sqlite
+      @sqlite
+    end
+
+    def record_link(link)
+      sqlite.execute "INSERT INTO links ( link ) VALUES ( ? )", link
     end
 
 end
