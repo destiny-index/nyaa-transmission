@@ -37,10 +37,6 @@ class TransmissionClient
     end
   end
 
-  def list_all
-    transmission.list
-  end
-
   def count
     list_all.length
   end
@@ -72,6 +68,10 @@ class TransmissionClient
 
     def record_link(link)
       sqlite.execute "INSERT INTO links ( link ) VALUES ( ? )", link
+    end
+
+    def list_all
+      transmission.list
     end
 
 end
