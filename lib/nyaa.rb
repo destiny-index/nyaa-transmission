@@ -5,8 +5,8 @@ require "transmission_client"
 class NyaaTorrents
   attr_accessor :bittorrent
 
-  def initialize()
-    @bittorrent = TransmissionClient.new
+  def initialize(args={})
+    @bittorrent = TransmissionClient.new args
   end
 
   def add_all_magnets(series="")
