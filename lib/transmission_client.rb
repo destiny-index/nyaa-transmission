@@ -22,7 +22,7 @@ class TransmissionClient
   def add_magnets(magnets)
     magnets.each do |m|
       record_link m
-      transmission.add_magnet m, :paused => true
+      transmission.add_magnet m
     rescue SQLite3::ConstraintException
       next
     end
@@ -31,7 +31,7 @@ class TransmissionClient
   def add_torrents(torrents)
     torrents.each do |t|
       record_link t
-      transmission.add_torrentfile t, :paused => true
+      transmission.add_torrentfile t
     rescue SQLite3::ConstraintException
       next
     end
