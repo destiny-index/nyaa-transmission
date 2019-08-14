@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "json"
-require "nyaa"
+require "nyaa_torrents"
 
 anime_series = JSON.parse File.read(ARGV[0])
 nyaa = NyaaTorrents.new :database => File.expand_path("~/nyaa.db")
