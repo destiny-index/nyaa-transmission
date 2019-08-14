@@ -7,9 +7,9 @@ class TransmissionClient
     @port = args[:port] || 9091
     @user = args[:user] || "transmission"
     @pass = args[:pass] || "transmission"
-    @db = args[:db] || ":memory:"
+    @database = args[:database] || ":memory:"
 
-    @sqlite = SQLite3::Database.new @db
+    @sqlite = SQLite3::Database.new @database
     @sqlite.execute <<~SQL
       CREATE TABLE IF NOT EXISTS links (
         id INTEGER PRIMARY KEY,

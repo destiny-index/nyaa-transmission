@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "json"
+require "nyaa"
+
+anime_series = JSON.parse File.read(ARGV[0])
+nyaa = NyaaTorrents.new :database => File.expand_path("~/nyaa.db")
+
+anime_series.each do |series|
+  nyaa.add_all_magnets(series)
+end

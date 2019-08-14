@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "nyaa"
+require "nyaa_torrents"
 
 class TestNyaaTorrents < Minitest::Test
   def setup
