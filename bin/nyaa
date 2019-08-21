@@ -1,14 +1,44 @@
 #!/usr/bin/env ruby
 
+
 require "json"
 require "horrible_subs"
 require "transmission_client"
+require "optparse"
 
-SQLITE_DB = File.expand_path "~/nyaa.db"
+options = {
+  :database => File.expand_path("~/nyaa.db")
+}
 
-anime_series = JSON.parse File.read(ARGV[0])
-transmission_bt = TransmissionClient.new :database => SQLITE_DB
+# Show banner if there are no arguments
+if ARGV.empty?
+  ARGV << "-h"
+end
 
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: nyaa [OPTIONS] QUERY"
+
+  opts.on("-d DATABASE", "--database=DATABASE", "SQLite3 Database") do |db|
+    options[:database] = File.expand_path db
+  end
+
+  opts.on_tail("-h", "--help", "Shows this help") do
+    puts opts
+    exit
+  end
+
+end
+
+optparse.parse!
+
+# Show banner if there is no query
+if ARGV.length == 0
+  puts optparse
+  exit 1
+end
+
+anime_series = ARGV
+transmission_bt = TransmissionClient.new options
 
 anime_series.each do |series|
   transmission_bt.add_magnets HorribleSubs.search_for(series)
