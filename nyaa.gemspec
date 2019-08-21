@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
   s.executables = ["nyaa"]
   s.license     = "MIT"
 
-  s.add_runtime_dependency "nokogiri", "~> 1.10.3"
-  s.add_runtime_dependency "transmission-ng", "~> 1.0.10"
-  s.add_runtime_dependency "sqlite3", "~> 1.4.1"
+  s.add_runtime_dependency "nokogiri", "~> 1.10"
+  s.add_runtime_dependency "transmission-ng", "~> 1.0", ">= 1.0.10"
+  s.add_runtime_dependency "sqlite3", "~> 1.4"
 
-  s.add_development_dependency "rake", "~> 12.3.2"
-  s.add_development_dependency "minitest", "~> 5.11.3"
-  s.add_development_dependency "webmock", "~> 3.6.0"
+  s.add_development_dependency "rake", "~> 12.3"
+  s.add_development_dependency "minitest", "~> 5.11"
+  s.add_development_dependency "webmock", "~> 3.6"
 end
