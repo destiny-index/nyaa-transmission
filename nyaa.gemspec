@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "nyaa"
-  s.version     = "0.0.0"
+  s.version     = "0.0.1"
   s.date        = "2019-08-14"
   s.summary     = "Search and submit anime on NyaaTorrents to Transmission"
   s.authors     = ["Anthony Poon"]
