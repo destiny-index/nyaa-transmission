@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 
 require "json"
-require "nyaa_torrents"
+require "horrible_subs"
+require "transmission_client"
+
+SQLITE_DB = File.expand_path "~/nyaa.db"
 
 anime_series = JSON.parse File.read(ARGV[0])
-nyaa = NyaaTorrents.new :database => File.expand_path("~/nyaa.db")
+transmission_bt = TransmissionClient.new :database => SQLITE_DB
+
 
 anime_series.each do |series|
-  nyaa.add_all_magnets(series)
+  transmission_bt.add_magnets HorribleSubs.search_for(series)
 end
