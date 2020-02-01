@@ -68,6 +68,7 @@ class TransmissionClient
 
     def record_link(link)
       sqlite.execute "INSERT INTO links ( link ) VALUES ( ? )", link
+      puts link
     end
 
     def list_all
