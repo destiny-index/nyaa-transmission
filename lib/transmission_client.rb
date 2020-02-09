@@ -1,5 +1,6 @@
 require "transmission"
 require "sqlite3"
+require "magnet"
 
 class TransmissionClient
   def initialize(args={})
@@ -68,7 +69,7 @@ class TransmissionClient
 
     def record_link(link)
       sqlite.execute "INSERT INTO links ( link ) VALUES ( ? )", link
-      puts link
+      puts Magnet.name(link)
     end
 
     def list_all
