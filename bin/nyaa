@@ -6,7 +6,8 @@ require "transmission_client"
 require "optparse"
 
 options = {
-  :database => File.expand_path("~/nyaa.db")
+  :database => File.expand_path("~/nyaa.db"),
+  :provider => "HorribleSubs"
 }
 
 # Show banner if there are no arguments
@@ -19,6 +20,10 @@ optparse = OptionParser.new do |opts|
 
   opts.on("-d DATABASE", "--database=DATABASE", "SQLite3 Database") do |db|
     options[:database] = File.expand_path db
+  end
+
+  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: HorribleSubs, Blackjaxx") do |provider|
+    options[:provider] = provider
   end
 
   opts.on_tail("-h", "--help", "Shows this help") do
@@ -40,5 +45,5 @@ anime_series = ARGV
 transmission_bt = TransmissionClient.new options
 
 anime_series.each do |series|
-  transmission_bt.add_magnets HorribleSubs.search_for(series)
+  transmission_bt.add_magnets Kernel.const_get(options[:provider]).search_for(series)
 end
