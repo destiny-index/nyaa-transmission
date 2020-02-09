@@ -1,5 +1,5 @@
 require "minitest"
-require "horrible_subs"
+require "providers"
 
 class TestHorribleSubs < MiniTest::Test
   def test_that_anime_from_horrible_subs_can_be_found
