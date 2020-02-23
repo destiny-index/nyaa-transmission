@@ -9,6 +9,7 @@ class TransmissionClient
     @user = args[:user] || "transmission"
     @pass = args[:pass] || "transmission"
     @database = args[:database] || ":memory:"
+    @logger = args[:logger] || Logger.new(IO::NULL)
 
     @sqlite = SQLite3::Database.new @database
     @sqlite.execute <<~SQL
@@ -23,6 +24,7 @@ class TransmissionClient
   def add_magnets(magnets)
     magnets.each do |m|
       record_link m
+      @logger.info Magnet.name(m)
       transmission.add_magnet m
     rescue SQLite3::ConstraintException
       next
@@ -32,6 +34,7 @@ class TransmissionClient
   def add_torrents(torrents)
     torrents.each do |t|
       record_link t
+      @logger.info t
       transmission.add_torrentfile t
     rescue SQLite3::ConstraintException
       next
@@ -69,7 +72,6 @@ class TransmissionClient
 
     def record_link(link)
       sqlite.execute "INSERT INTO links ( link ) VALUES ( ? )", link
-      puts Magnet.name(link)
     end
 
     def list_all

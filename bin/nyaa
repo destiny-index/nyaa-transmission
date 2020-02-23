@@ -6,6 +6,7 @@ require "transmission_client"
 require "optparse"
 
 options = {
+  :logger => Logger.new(STDOUT),
   :database => File.expand_path("~/nyaa.db"),
   :provider => "HorribleSubs"
 }
