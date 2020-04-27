@@ -1,7 +1,14 @@
+require "objspace"
 require "nyaa_search"
 require "nyaa_scraper"
 
-class HorribleSubs
+class Provider
+  def self.list
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+end
+
+class HorribleSubs < Provider
   def self.search_for(series)
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::TrustedOnly,
@@ -15,7 +22,7 @@ class HorribleSubs
   end
 end
 
-class Blackjaxx
+class Blackjaxx < Provider
   def self.search_for(series)
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::NoFilter,

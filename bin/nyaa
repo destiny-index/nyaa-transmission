@@ -7,7 +7,7 @@ require "optparse"
 
 options = {
   :logger => Logger.new(STDOUT),
-  :database => File.expand_path("~/nyaa.db"),
+  :database => File.expand_path("nyaa.db", ENV["XDG_DATA_HOME"] || "~/.local/share"),
   :provider => "HorribleSubs"
 }
 
@@ -19,11 +19,11 @@ end
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: nyaa [OPTIONS] QUERY"
 
-  opts.on("-d DATABASE", "--database=DATABASE", "SQLite3 Database") do |db|
+  opts.on("-d DATABASE", "--database=DATABASE", "The SQLite3 database file [default: $HOME/.local/share/nyaa.db]") do |db|
     options[:database] = File.expand_path db
   end
 
-  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: HorribleSubs, Blackjaxx") do |provider|
+  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: #{Provider.list.join ', '} [default: Horriblesuts]") do |provider|
     options[:provider] = provider
   end
 
