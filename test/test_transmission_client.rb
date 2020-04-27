@@ -9,7 +9,7 @@ class TestTransmissionClient < Minitest::Test
     @magnet_links = JSON.parse File.read("fixtures/magnets.json")
     @torrent_links = JSON.parse File.read("fixtures/torrents.json")
 
-    @bittorrent = TransmissionClient.new
+    @bittorrent = TransmissionClient.new(:port => ENV["TEST_PORT"] || 39091)
   end
 
   def teardown
