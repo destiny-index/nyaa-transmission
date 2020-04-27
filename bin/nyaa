@@ -23,7 +23,7 @@ optparse = OptionParser.new do |opts|
     options[:database] = File.expand_path db
   end
 
-  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: #{Provider.list.join ', '} [default: Horriblesuts]") do |provider|
+  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: #{Provider.list.join ', '} [default: Horriblesubs]") do |provider|
     options[:provider] = provider
   end
 
