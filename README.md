@@ -24,9 +24,9 @@ Uses the default username, password and port number for transmission.
 
     ```
     Usage: nyaa [OPTIONS] QUERY
-        -d, --database=DATABASE          The SQLite3 database [default: $HOME/.local/share/nyaa.db]
-        -p, --provider=PROVIDER          One of: Blackjaxx, EraiRaws, HorribleSubs [default: EraiRaws]
-        -h, --help                       Shows this help
+        -d, --database=DATABASE   The SQLite3 database [default: $HOME/.local/share/nyaa.db]
+        -p, --provider=PROVIDER   One of: Blackjaxx, EraiRaws, HorribleSubs [default: EraiRaws]
+        -h, --help                Shows this help
     ```
 
 Example of downloading the anime "Hamefura"
