@@ -27,7 +27,7 @@ class EraiRaws < Provider
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::TrustedOnly,
       :category => Nyaa::Category::Anime::EnglishTranslated,
-      :query => "Erai-raws 1080p -batch #{series}",
+      :query => "Erai-raws 1080p -\"~\" #{series}",
       :page => 1
     )
 
