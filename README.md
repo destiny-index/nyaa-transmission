@@ -4,7 +4,7 @@ default it will look for 1080p episodes from EraiRaws.
 # Quickstart
 
 1. Install transmission-daemon e.g. `apt install transmission-daemon`
-2. Install this gem e.g. `gem install nyaa`
+2. Install this gem e.g. `gem install nyaa-transmission`
 3. Run `nyaa`
 
 e.g.
