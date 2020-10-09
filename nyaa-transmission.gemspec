@@ -1,8 +1,9 @@
 Gem::Specification.new do |s|
-  s.name        = "nyaa"
+  s.name        = "nyaa-transmission"
   s.version     = "1.0.6"
   s.date        = "2019-08-14"
   s.summary     = "Search and submit anime on NyaaTorrents to Transmission"
+  s.homepage    = "https://github.com/destiny-index/nyaa-transmission"
   s.authors     = ["Anthony Poon"]
   s.email       = "marquis.andras@gmail.com"
   s.files       = Dir.glob("{bin,lib}/**/*")

@@ -4,7 +4,7 @@ default it will look for 1080p episodes from EraiRaws.
 # Quickstart
 
 1. Install transmission-daemon e.g. `apt install transmission-daemon`
-2. Install this gem
+2. Install this gem e.g. `gem install nyaa`
 3. Run `nyaa`
 
 e.g.
@@ -17,7 +17,7 @@ Usage: nyaa [OPTIONS] QUERY
 ```
 
 ```
-$ nyaa "Hamefura"
+$ nyaa --provider=HorribleSubs "Hamefura"
 I, [2020-04-27T13:13:18.200330 #28717]  INFO -- : [HorribleSubs] Hamefura - 04 [1080p].mkv
 I, [2020-04-27T13:13:18.220550 #28717]  INFO -- : [HorribleSubs] Hamefura - 03 [1080p].mkv
 I, [2020-04-27T13:13:18.237193 #28717]  INFO -- : [HorribleSubs] Hamefura - 02 [1080p].mkv
