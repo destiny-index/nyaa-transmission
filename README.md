@@ -20,11 +20,11 @@ nyaa "Mahouka Koukou no Rettousei"
 
 This gem uses the default username, password and port number for transmission.
 
-__Username:__ transmission
-
-__Password:__ transmission
-
-__Port:__ 9091
+| Setting  | Value        |
+| -------- | ------------ |
+| Username | transmission |
+| Password | transmission |
+| Port     | 9091         |
 
 # Quickstart
 
