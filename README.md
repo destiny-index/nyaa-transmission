@@ -1,10 +1,30 @@
+# README
+
 This gem adds magnet links for the given anime from "nyaa.si" to transmission. By
 default it will look for 1080p episodes from EraiRaws.
 
-Torrents that has been added to transmission will be recorded in a sqlite3
+Magnet links that have been added to transmission will be recorded in a sqlite3
 database, and will not be fetched again later.
 
-Uses the default username, password and port number for transmission.
+This means that it will be safe to create a cron script that downloads the same
+anime repeatedly, and only new episodes will be fetched.
+
+e.g. An example cron script to get the latest episodes of two anime series:
+
+```
+#!/bin/sh
+
+nyaa "Enen no Shouboutai"
+nyaa "Mahouka Koukou no Rettousei"
+```
+
+This gem uses the default username, password and port number for transmission.
+
+__Username:__ transmission
+
+__Password:__ transmission
+
+__Port:__ 9091
 
 # Quickstart
 
@@ -29,7 +49,7 @@ Uses the default username, password and port number for transmission.
         -h, --help                Shows this help
     ```
 
-Example of downloading the anime "Hamefura"
+Example of downloading the anime "Hamefura" from HorribleSubs
 
 ```
 $ nyaa --provider=HorribleSubs "Hamefura"
