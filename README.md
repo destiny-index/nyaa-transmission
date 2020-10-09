@@ -1,5 +1,5 @@
 This gem adds magnet links for the given anime from "nyaa.si" to transmission. By
-default it will look for 1080p episodes from HorribleSubs.
+default it will look for 1080p episodes from EraiRaws.
 
 # Quickstart
 
