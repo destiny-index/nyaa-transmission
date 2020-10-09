@@ -1,10 +1,11 @@
 # README
 
-This gem adds magnet links for the given anime from "nyaa.si" to transmission. By
-default it will look for 1080p episodes from EraiRaws.
+This gem adds magnet links for the given anime from
+[NyaaTorrents](https://nyaa.si) to [Transmission](https://transmissionbt.com/).
+By default it will look for 1080p episodes from EraiRaws.
 
-Magnet links that have been added to transmission will be recorded in a sqlite3
-database, and will not be fetched again later.
+Magnet links that have been added to **transmission** will be recorded in a
+sqlite3 database, and will not be fetched again later.
 
 This means that it will be safe to create a cron script that downloads the same
 anime repeatedly, and only new episodes will be fetched.
@@ -18,7 +19,8 @@ nyaa "Enen no Shouboutai"
 nyaa "Mahouka Koukou no Rettousei"
 ```
 
-This gem uses the default username, password and port number for transmission.
+This gem uses the default username, password and port number for
+**transmission**.
 
 | Setting  | Value        |
 | -------- | ------------ |
