@@ -22,6 +22,20 @@ class HorribleSubs < Provider
   end
 end
 
+class EraiRaws < Provider
+  def self.search_for(series)
+    search_criteria = NyaaSearch.new(
+      :filter => Nyaa::Filter::TrustedOnly,
+      :category => Nyaa::Category::Anime::EnglishTranslated,
+      :query => "Erai-raws 1080p -batch #{series}",
+      :page => 1
+    )
+
+    scraper = NyaaScraper.new(search_criteria)
+    return scraper.magnets
+  end
+end
+
 class Blackjaxx < Provider
   def self.search_for(series)
     search_criteria = NyaaSearch.new(

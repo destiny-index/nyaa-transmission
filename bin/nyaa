@@ -8,7 +8,7 @@ require "optparse"
 options = {
   :logger => Logger.new(STDOUT),
   :database => File.expand_path("nyaa.db", ENV["XDG_DATA_HOME"] || "~/.local/share"),
-  :provider => "HorribleSubs"
+  :provider => "EraiRaws"
 }
 
 # Show banner if there are no arguments
@@ -19,11 +19,11 @@ end
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: nyaa [OPTIONS] QUERY"
 
-  opts.on("-d DATABASE", "--database=DATABASE", "The SQLite3 database file [default: $HOME/.local/share/nyaa.db]") do |db|
+  opts.on("-d DATABASE", "--database=DATABASE", "The SQLite3 database [default: $HOME/.local/share/nyaa.db]") do |db|
     options[:database] = File.expand_path db
   end
 
-  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: #{Provider.list.join ', '} [default: Horriblesubs]") do |provider|
+  opts.on("-p PROVIDER", "--provider=PROVIDER", "One of: #{Provider.list.join ', '} [default: EraiRaws]") do |provider|
     options[:provider] = provider
   end
 
