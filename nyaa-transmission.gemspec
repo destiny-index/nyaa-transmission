@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "nyaa-transmission"
-  s.version     = "1.0.7"
+  s.version     = "1.0.8"
   s.date        = "2019-08-14"
   s.summary     = "Search and submit anime on NyaaTorrents to Transmission"
   s.homepage    = "https://github.com/destiny-index/nyaa-transmission"

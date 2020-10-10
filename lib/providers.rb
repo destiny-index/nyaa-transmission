@@ -43,8 +43,7 @@ class Blackjaxx < Provider
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::NoFilter,
       :category => Nyaa::Category::Anime::EnglishTranslated,
-      :query => "1080p -batch #{series}",
-      :submitter => "Blackjaxx",
+      :query => "Blackjaxx 1080p -batch #{series}",
       :page => 1
     )
 
