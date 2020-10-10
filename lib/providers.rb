@@ -13,7 +13,8 @@ class HorribleSubs < Provider
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::TrustedOnly,
       :category => Nyaa::Category::Anime::EnglishTranslated,
-      :query => "HorribleSubs 1080p -batch #{series}",
+      :query => "1080p -batch #{series}",
+      :user => "HorribleSubs",
       :page => 1
     )
 
@@ -27,7 +28,8 @@ class EraiRaws < Provider
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::TrustedOnly,
       :category => Nyaa::Category::Anime::EnglishTranslated,
-      :query => "Erai-raws 1080p -\"~\" #{series}",
+      :query => "1080p -\"~\" #{series}",
+      :user => "Erai-raws",
       :page => 1
     )
 
@@ -41,7 +43,8 @@ class Blackjaxx < Provider
     search_criteria = NyaaSearch.new(
       :filter => Nyaa::Filter::NoFilter,
       :category => Nyaa::Category::Anime::EnglishTranslated,
-      :query => "Blackjaxx 1080p -batch #{series}",
+      :query => "1080p -batch #{series}",
+      :user => "Blackjaxx",
       :page => 1
     )
 

@@ -20,21 +20,24 @@ module Nyaa::Category
 end
 
 class NyaaSearch
-  attr_accessor :filter, :category, :query, :page
+  attr_accessor :filter, :category, :query, :user, :page
 
   def initialize(args={})
     self.filter = args[:filter] ||  Nyaa::Filter::NoFilter
     self.category = args[:category] || Nyaa::Category::AllCategories
     self.query = args[:query] || ""
+    self.user = args[:user] || nil
     self.page = args[:page] || 1
   end
 
   def querystring
-    URI.encode_www_form(
+    form = {
       "f" => self.filter,
       "c" => self.category,
       "q" => self.query,
-      "p" => self.page
-    )
+      "p" => self.page,
+      "u" => self.user,
+    }
+    URI.encode_www_form(form.compact)
   end
 end
