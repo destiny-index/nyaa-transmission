@@ -28,13 +28,13 @@ class TestNyaaSearch < MiniTest::Test
     assert_match "p=2", nyaa.querystring
   end
 
-  def test_that_the_query_string_contains_the_user
-    nyaa = NyaaSearch.new :user => "Erai-raws"
+  def test_that_the_query_string_contains_the_submitter
+    nyaa = NyaaSearch.new :submitter => "Erai-raws"
 
     assert_match "u=Erai-raws", nyaa.querystring
   end
 
-  def test_that_the_query_string_does_not_contain_missing_user
+  def test_that_the_query_string_does_not_contain_missing_submitter
     nyaa = NyaaSearch.new
 
     refute_match "&u", nyaa.querystring
