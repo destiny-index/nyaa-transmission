@@ -33,6 +33,7 @@ This gem uses the default username, password and port number for
 1. Install dependencies
 
     ```
+    apt install build-essential patch ruby-dev zlib1g-dev liblzma-dev # for Nokogiri
     apt install transmission-daemon libsqlite3-dev
     ```
 
